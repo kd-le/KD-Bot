@@ -13,21 +13,7 @@ module.exports = function (bot) {
         return res.send(new Date().toDateString())
     })
 
-    bot.respond(/What do you want to do today?/i, function(res){
-        return res.send("I'm too fat to do anything!")
-    })
-
-//Questions about yelp
-    bot.respond(/What's the temp in (.*)/i, async function(msg){
-        let cityName
-        cityName = msg.match[1]
-        console.log(cityName)
-        let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=19c4a780bd0f2058ff8b95dd621da84e&units=imperial`
-
-        let response = await axios.get(url)    
-    }) 
-
-//Questions about weather
+//weather api
     bot.respond(/What's the temp in (.*)/i, async function(msg){
         let cityName
         cityName = msg.match[1]
@@ -80,6 +66,84 @@ module.exports = function (bot) {
         let timestr = date.toLocaleTimeString() 
         return msg.send('Sunset in ' + cityName + ' is at ' + timestr)
     }) 
+
+    // bot.respond(/blah (.*) in (.*)/i, async function(msg){
+    //     let cityName
+    //     let numDay
+    //     cityName = msg.match[1]
+    //     numDay = msg.match[2]
+    //     console.log(cityName, numDay)
+    //     let url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=19c4a780bd0f2058ff8b95dd621da84e`
+
+    //     let response = await axios.get(url)
+    //     // let seconds = response.data.sys.sunset
+    //     // let date = new Date(seconds *1000)
+    //     // let timestr = date.toLocaleTimeString() 
+    //     console.log(response.data)
+    //     //return msg.send('Sunset in ' + cityName + ' is at ' + timestr)
+    // }) 
+
+
+    //Bored API
+    bot.respond(/I don't have any friends. What should I do for fun?/i, async function(msg){
+        let url = `http://www.boredapi.com/api/activity?participants=1`
+
+        let response = await axios.get(url) 
+        let activity = response.data.activity
+        let lowerActivity = activity.toLowerCase();
+        console.log(response.data) 
+        return msg.send('You can ' + lowerActivity + '. But you should probably make some friends...')
+    }) 
+
+    bot.respond(/I'm having friends over. What can we do with (.*) people/i, async function(msg){
+        let numFriend
+        numFriend = msg.match[1]
+        let url = `http://www.boredapi.com/api/activity?participants=${numFriend}`
+        let response = await axios.get(url) 
+        let activity = response.data.activity
+        let lowerActivity = activity.toLowerCase()
+        return msg.send('You can ' + lowerActivity + '.') 
+    }) 
+
+    bot.respond(/I don't have any money. What can I do for fun?/i, async function(msg){
+        let url = `http://www.boredapi.com/api/activity?price=0.0`
+
+        let response = await axios.get(url) 
+        let activity = response.data.activity
+        let lowerActivity = activity.toLowerCase();
+        return msg.send(`You need to manage your money better! But for now, you can ` + lowerActivity + '.')
+    }) 
+
+    bot.respond(/What should I cook for dinner?/i, async function(msg){
+        let url = `http://www.boredapi.com/api/activity?type=cooking`
+
+        let response = await axios.get(url) 
+        let activity = response.data.activity
+        let lowerActivity = activity.toLowerCase();
+        return msg.send(`You can ` + lowerActivity + '.')
+    }) 
+
+    bot.respond(/Christmas is coming but I'm broke. What can I make for family?/i, async function(msg){
+        let url = `http://www.boredapi.com/api/activity?type=diy&price=0.0`
+
+        let response = await axios.get(url) 
+        let activity = response.data.activity
+        let lowerActivity = activity.toLowerCase();
+        return msg.send(`I feel bad for your family! You can ` + lowerActivity + '.')
+
+    })
+    
+    bot.respond(/This slackbot project is stressing me out. What can I do to relax?/i, async function(msg){
+        let url = `http://www.boredapi.com/api/activity?type=relaxation`
+        let response = await axios.get(url) 
+        let activity = response.data.activity
+        let lowerActivity = activity.toLowerCase();
+        return msg.send(`You can ` + lowerActivity + '.')
+
+    })
+    
+
+
 
 }
 
