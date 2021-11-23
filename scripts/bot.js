@@ -5,12 +5,25 @@
 const axios = require ("axios")
 
 module.exports = function (bot) {
-    bot.hear(/Good Morning!/, function(res){
-        return res.send('Good morning! What can I help you with today?')
+    bot.hear(/Good Morning!/i, function(msg){
+        return msg.send('Good morning! What can I help you with today?')
     })
 
-    bot.hear(/What day is it today?/i, function(res){
-        return res.send(new Date().toDateString())
+    bot.hear(/What day is it today?/i, function(msg){
+        return msg.send(new Date().toDateString())
+    })
+
+    bot.hear(/Do you love me?/i, function(msg){
+        return msg.send('Sorry, I dont understand! beep bop beep bop')
+    })
+
+    bot.hear(/Are you a robot?/i, function(msg){
+        return msg.send('No, Im KD-Bot')
+    })
+
+    bot.hear(/Time check/i, function(msg){
+        let date = new Date().toLocaleTimeString()
+        return msg.send('Its ' + date)
     })
 
 //weather api
