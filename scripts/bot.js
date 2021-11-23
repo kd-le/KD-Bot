@@ -17,7 +17,6 @@ module.exports = function (bot) {
     bot.respond(/What's the temp in (.*)/i, async function(msg){
         let cityName
         cityName = msg.match[1]
-        console.log(cityName)
         let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=19c4a780bd0f2058ff8b95dd621da84e&units=imperial`
 
         let response = await axios.get(url)
@@ -33,7 +32,6 @@ module.exports = function (bot) {
     bot.respond(/What's the weather like in (.*)/i, async function(msg){
         let cityName
         cityName = msg.match[1]
-        console.log(cityName)
         let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=19c4a780bd0f2058ff8b95dd621da84e&units=imperial`
 
         let response = await axios.get(url)
@@ -43,7 +41,6 @@ module.exports = function (bot) {
         bot.respond(/when is sunrise in (.*)/i, async function(msg){
         let cityName
         cityName = msg.match[1]
-        console.log(cityName)
         let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=19c4a780bd0f2058ff8b95dd621da84e&units=imperial`
 
         let response = await axios.get(url)
@@ -57,7 +54,6 @@ module.exports = function (bot) {
         let cityName
        
         cityName = msg.match[1]
-        console.log(cityName)
         let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=19c4a780bd0f2058ff8b95dd621da84e&units=imperial`
 
         let response = await axios.get(url)
@@ -67,23 +63,6 @@ module.exports = function (bot) {
         return msg.send('Sunset in ' + cityName + ' is at ' + timestr)
     }) 
 
-    // bot.respond(/blah (.*) in (.*)/i, async function(msg){
-    //     let cityName
-    //     let numDay
-    //     cityName = msg.match[1]
-    //     numDay = msg.match[2]
-    //     console.log(cityName, numDay)
-    //     let url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=19c4a780bd0f2058ff8b95dd621da84e`
-
-    //     let response = await axios.get(url)
-    //     // let seconds = response.data.sys.sunset
-    //     // let date = new Date(seconds *1000)
-    //     // let timestr = date.toLocaleTimeString() 
-    //     console.log(response.data)
-    //     //return msg.send('Sunset in ' + cityName + ' is at ' + timestr)
-    // }) 
-
-
     //Bored API
     bot.respond(/I don't have any friends. What should I do for fun?/i, async function(msg){
         let url = `http://www.boredapi.com/api/activity?participants=1`
@@ -91,7 +70,6 @@ module.exports = function (bot) {
         let response = await axios.get(url) 
         let activity = response.data.activity
         let lowerActivity = activity.toLowerCase();
-        console.log(response.data) 
         return msg.send('You can ' + lowerActivity + '. But you should probably make some friends...')
     }) 
 
@@ -141,10 +119,16 @@ module.exports = function (bot) {
         return msg.send(`You can ` + lowerActivity + '.')
 
     })
+
+    bot.respond(/I haven't got out of the house for so long. What social thing can I do?/i, async function(msg){
+        let url = `http://www.boredapi.com/api/activity?type=social`
+        let response = await axios.get(url) 
+        let activity = response.data.activity
+        let lowerActivity = activity.toLowerCase();
+        return msg.send(`You can ` + lowerActivity + '.')
+
+    })
     
-
-
-
 }
 
 
